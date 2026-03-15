@@ -1,0 +1,1497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maheshwori Gupta — Chemical Engineering</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --navy:    #0a0e1a;
+            --navy2:   #111827;
+            --panel:   #161d2e;
+            --orange:  #f97316;
+            --orange2: #fb923c;
+            --slate:   #94a3b8;
+            --border:  #1e293b;
+            --text:    #e2e8f0;
+            --dim:     #64748b;
+            --white:   #f8fafc;
+            --green:   #22c55e;
+            --sidebar: 280px;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Syne', sans-serif;
+            background: var(--navy);
+            color: var(--text);
+            min-height: 100vh;
+        }
+
+        /* ── NOISE OVERLAY ── */
+        body::after {
+            content: '';
+            position: fixed; inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 9998;
+            opacity: 0.6;
+        }
+
+        /* ── SCROLL PROGRESS ── */
+        #sp {
+            position: fixed; top: 0; left: 0;
+            height: 2px; width: 0%;
+            background: var(--orange);
+            z-index: 9999;
+        }
+
+        /* ══════════════════════════════════
+           SIDEBAR LAYOUT
+        ══════════════════════════════════ */
+        .layout {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* ── SIDEBAR ── */
+        .sidebar {
+            width: var(--sidebar);
+            min-height: 100vh;
+            background: var(--panel);
+            border-right: 1px solid var(--border);
+            position: fixed;
+            top: 0; left: 0;
+            display: flex;
+            flex-direction: column;
+            z-index: 100;
+            overflow: hidden;
+        }
+
+        .sidebar::before {
+            content: '';
+            position: absolute;
+            top: -60px; right: -60px;
+            width: 180px; height: 180px;
+            background: radial-gradient(circle, rgba(249,115,22,0.18), transparent 70%);
+            pointer-events: none;
+        }
+
+        .sb-top {
+            padding: 2.5rem 1.8rem 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .sb-badge {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.65rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--orange);
+            background: rgba(249,115,22,0.1);
+            border: 1px solid rgba(249,115,22,0.3);
+            padding: 0.25rem 0.6rem;
+            border-radius: 2px;
+            display: inline-block;
+            margin-bottom: 1.2rem;
+        }
+
+        .sb-name {
+            font-size: 1.35rem;
+            font-weight: 800;
+            color: var(--white);
+            line-height: 1.15;
+            margin-bottom: 0.4rem;
+        }
+
+        .sb-role {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            color: var(--dim);
+            line-height: 1.5;
+        }
+
+        .sb-cgpa {
+            margin-top: 1.2rem;
+            display: flex;
+            align-items: baseline;
+            gap: 0.4rem;
+        }
+
+        .sb-cgpa-num {
+            font-size: 2.4rem;
+            font-weight: 800;
+            color: var(--orange);
+            line-height: 1;
+        }
+
+        .sb-cgpa-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.65rem;
+            color: var(--dim);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        /* Sidebar nav */
+        .sb-nav {
+            padding: 1.5rem 0;
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .sb-nav a {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 0.7rem 1.8rem;
+            text-decoration: none;
+            color: var(--dim);
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            transition: all 0.2s;
+            border-left: 2px solid transparent;
+            position: relative;
+        }
+
+        .sb-nav a:hover {
+            color: var(--orange);
+            background: rgba(249,115,22,0.07);
+            border-left-color: var(--orange);
+            padding-left: 2.2rem;
+        }
+
+        .sb-nav .nav-num {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.6rem;
+            color: var(--border);
+            min-width: 20px;
+        }
+
+        .sb-nav a:hover .nav-num { color: var(--orange); opacity: 0.5; }
+
+        /* Sidebar contacts */
+        .sb-contacts {
+            padding: 1.5rem 1.8rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .sb-contact {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            margin-bottom: 0.6rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.65rem;
+            color: var(--dim);
+            word-break: break-all;
+        }
+
+        .sb-contact a { color: var(--slate); text-decoration: none; }
+        .sb-contact a:hover { color: var(--orange); }
+
+        .sb-contact-icon {
+            font-size: 0.8rem;
+            flex-shrink: 0;
+        }
+
+        /* ── MAIN CONTENT ── */
+        .main {
+            margin-left: var(--sidebar);
+            flex: 1;
+            min-height: 100vh;
+        }
+
+        /* ── HERO ── */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 4rem 4rem 4rem 4rem;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            bottom: -100px; right: -100px;
+            width: 500px; height: 500px;
+            background: radial-gradient(circle, rgba(249,115,22,0.06), transparent 65%);
+            pointer-events: none;
+        }
+
+        /* Big background text */
+        .hero-bg-text {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: clamp(5rem, 14vw, 11rem);
+            font-weight: 800;
+            color: rgba(255,255,255,0.018);
+            white-space: nowrap;
+            pointer-events: none;
+            user-select: none;
+            letter-spacing: -0.02em;
+        }
+
+        .hero-eyebrow {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--orange);
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .hero-eyebrow::before {
+            content: '';
+            width: 40px; height: 1px;
+            background: var(--orange);
+        }
+
+        .hero h1 {
+            font-size: clamp(2.8rem, 5vw, 5rem);
+            font-weight: 800;
+            line-height: 1.0;
+            color: var(--white);
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.02em;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 span {
+            color: var(--orange);
+            display: block;
+        }
+
+        .hero-desc {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            color: var(--slate);
+            max-width: 520px;
+            line-height: 1.7;
+            margin-bottom: 2.5rem;
+            position: relative; z-index: 1;
+        }
+
+        .hero-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+            margin-bottom: 3rem;
+            position: relative; z-index: 1;
+        }
+
+        .hero-tag {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.72rem;
+            padding: 0.4rem 0.9rem;
+            background: var(--panel);
+            border: 1px solid var(--border);
+            color: var(--slate);
+            border-radius: 2px;
+            transition: all 0.2s;
+        }
+
+        .hero-tag:hover {
+            border-color: var(--orange);
+            color: var(--orange);
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 3rem;
+            position: relative; z-index: 1;
+        }
+
+        .h-stat-num {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--orange);
+            line-height: 1;
+        }
+
+        .h-stat-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.65rem;
+            color: var(--dim);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-top: 0.3rem;
+        }
+
+        /* ── CONTENT SECTIONS ── */
+        .content-section {
+            padding: 5rem 4rem;
+            border-bottom: 1px solid var(--border);
+            position: relative;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: baseline;
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+
+        .sec-num {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            color: var(--orange);
+            opacity: 0.6;
+        }
+
+        .section-header h2 {
+            font-size: 1.9rem;
+            font-weight: 800;
+            color: var(--white);
+            letter-spacing: -0.02em;
+        }
+
+        .sec-line {
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
+        /* ── BLOCK CARD ── */
+        .bcard {
+            background: var(--panel);
+            border: 1px solid var(--border);
+            padding: 2rem;
+            margin-bottom: 1.2rem;
+            position: relative;
+            overflow: hidden;
+            transition: border-color 0.25s, transform 0.25s;
+        }
+
+        .bcard::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 3px; height: 0;
+            background: var(--orange);
+            transition: height 0.3s ease;
+        }
+
+        .bcard:hover {
+            border-color: rgba(249,115,22,0.4);
+            transform: translateX(4px);
+        }
+
+        .bcard:hover::before { height: 100%; }
+
+        .bcard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 0.6rem;
+        }
+
+        .bcard-title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--white);
+        }
+
+        .bcard-date {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.68rem;
+            color: var(--orange);
+            background: rgba(249,115,22,0.1);
+            border: 1px solid rgba(249,115,22,0.25);
+            padding: 0.2rem 0.6rem;
+            border-radius: 2px;
+            white-space: nowrap;
+        }
+
+        .bcard-sub {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.72rem;
+            color: var(--dim);
+            margin-bottom: 1rem;
+        }
+
+        .bcard ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .bcard ul li {
+            font-size: 0.88rem;
+            color: var(--slate);
+            padding: 0.3rem 0 0.3rem 1.3rem;
+            position: relative;
+            line-height: 1.6;
+        }
+
+        .bcard ul li::before {
+            content: '›';
+            position: absolute; left: 0;
+            color: var(--orange);
+            font-size: 1rem;
+            font-weight: 700;
+        }
+
+        .bcard-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-top: 1rem;
+        }
+
+        .btag {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.65rem;
+            padding: 0.2rem 0.6rem;
+            background: rgba(249,115,22,0.08);
+            color: var(--orange);
+            border: 1px solid rgba(249,115,22,0.2);
+            border-radius: 2px;
+        }
+
+        /* ── RESEARCH HIGHLIGHT ── */
+        .research-block {
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-left: 3px solid var(--green);
+            padding: 2rem;
+            margin-bottom: 1.2rem;
+            position: relative;
+        }
+
+        .research-status {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.65rem;
+            color: var(--green);
+            background: rgba(34,197,94,0.1);
+            border: 1px solid rgba(34,197,94,0.25);
+            padding: 0.2rem 0.6rem;
+            border-radius: 2px;
+            display: inline-block;
+            margin-bottom: 0.8rem;
+        }
+
+        .research-title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 0.4rem;
+            line-height: 1.4;
+        }
+
+        .research-role {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            color: var(--dim);
+            margin-bottom: 1rem;
+        }
+
+        .research-desc {
+            font-size: 0.88rem;
+            color: var(--slate);
+            line-height: 1.65;
+        }
+
+        /* ── SKILLS ── */
+        .skills-layout {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.2rem;
+        }
+
+        .skill-block {
+            background: var(--panel);
+            border: 1px solid var(--border);
+            padding: 1.6rem;
+            transition: border-color 0.25s;
+        }
+
+        .skill-block:hover { border-color: rgba(249,115,22,0.4); }
+
+        .skill-block-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.65rem;
+            color: var(--orange);
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .skill-block-label::after {
+            content: '';
+            flex: 1; height: 1px;
+            background: var(--border);
+        }
+
+        .skill-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .sp {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            padding: 0.4rem 0.85rem;
+            border: 1px solid var(--border);
+            color: var(--slate);
+            background: var(--navy2);
+            border-radius: 2px;
+            transition: all 0.2s;
+            cursor: default;
+        }
+
+        .sp:hover {
+            border-color: var(--orange);
+            color: var(--orange);
+        }
+
+        /* ── ACHIEVEMENTS ── */
+        .ach-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+        }
+
+        .ach-item {
+            background: var(--panel);
+            border: 1px solid var(--border);
+            padding: 1.4rem 1.6rem;
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+            transition: border-color 0.25s, transform 0.2s;
+        }
+
+        .ach-item:hover {
+            border-color: rgba(249,115,22,0.4);
+            transform: translateY(-3px);
+        }
+
+        .ach-icon {
+            font-size: 1.4rem;
+            flex-shrink: 0;
+            margin-top: 0.1rem;
+        }
+
+        .ach-title {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 0.2rem;
+        }
+
+        .ach-sub {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.68rem;
+            color: var(--dim);
+            line-height: 1.5;
+        }
+
+        /* ── CERTS ── */
+        .cert-row {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem 1.5rem;
+            background: var(--panel);
+            border: 1px solid var(--border);
+            margin-bottom: 0.6rem;
+            transition: border-color 0.2s;
+        }
+
+        .cert-row:hover { border-color: rgba(249,115,22,0.4); }
+
+        .cert-dot {
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            background: var(--orange);
+            flex-shrink: 0;
+        }
+
+        .cert-name {
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: var(--white);
+            flex: 1;
+        }
+
+        .cert-org {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.65rem;
+            color: var(--dim);
+        }
+
+        /* ── LEADERSHIP ── */
+        .pos-block {
+            background: var(--panel);
+            border: 1px solid var(--border);
+            padding: 1.6rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            transition: border-color 0.25s;
+        }
+
+        .pos-block:hover { border-color: rgba(249,115,22,0.4); }
+
+        .pos-title {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--white);
+        }
+
+        .pos-org {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            color: var(--dim);
+            margin-top: 0.2rem;
+        }
+
+        /* ── TESTIMONIALS ── */
+        .test-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.2rem;
+        }
+
+        .tcard {
+            background: var(--panel);
+            border: 1px solid var(--border);
+            padding: 2rem;
+            position: relative;
+            transition: border-color 0.25s, transform 0.25s;
+        }
+
+        .tcard:hover {
+            border-color: rgba(249,115,22,0.4);
+            transform: translateY(-4px);
+        }
+
+        .tcard-mark {
+            font-family: 'Syne', sans-serif;
+            font-size: 4rem;
+            font-weight: 800;
+            color: var(--orange);
+            opacity: 0.15;
+            line-height: 0.8;
+            margin-bottom: 0.5rem;
+        }
+
+        .tcard p {
+            font-size: 0.88rem;
+            color: var(--slate);
+            line-height: 1.7;
+            font-style: italic;
+            margin-bottom: 1.5rem;
+        }
+
+        .tcard-author {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--white);
+        }
+
+        .tcard-role {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.65rem;
+            color: var(--dim);
+            margin-top: 0.2rem;
+        }
+
+        /* ── ETHICS & FUTURE (full-width blocks) ── */
+        .fw-block {
+            background: var(--panel);
+            border: 1px solid var(--border);
+            padding: 2rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .fw-block h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .fw-block h3::after {
+            content: '';
+            flex: 1; height: 1px;
+            background: var(--border);
+        }
+
+        .fw-block ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .fw-block ul li {
+            font-size: 0.88rem;
+            color: var(--slate);
+            padding: 0.35rem 0 0.35rem 1.3rem;
+            position: relative;
+        }
+
+        .fw-block ul li::before {
+            content: '//';
+            position: absolute; left: 0;
+            color: var(--orange);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.65rem;
+            font-weight: 500;
+            top: 0.45rem;
+        }
+
+        .inline-highlight {
+            display: inline;
+            background: rgba(249,115,22,0.12);
+            border: 1px solid rgba(249,115,22,0.25);
+            color: var(--orange);
+            padding: 0.1rem 0.4rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            border-radius: 2px;
+        }
+
+        /* ── SWOT ── */
+        .swot-wrap {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1px;
+            background: var(--border);
+            border: 1px solid var(--border);
+            margin-bottom: 2rem;
+        }
+
+        .sw-cell {
+            background: var(--panel);
+            padding: 1.8rem;
+        }
+
+        .sw-head {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.68rem;
+            font-weight: 600;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .sw-cell.s .sw-head { color: #22c55e; }
+        .sw-cell.w .sw-head { color: #ef4444; }
+        .sw-cell.o .sw-head { color: #60a5fa; }
+        .sw-cell.t .sw-head { color: #f59e0b; }
+
+        .sw-cell ul { list-style: none; padding: 0; }
+        .sw-cell ul li {
+            font-size: 0.85rem;
+            color: var(--slate);
+            padding: 0.25rem 0 0.25rem 1.2rem;
+            position: relative;
+        }
+        .sw-cell.s ul li::before { content: '+'; position: absolute; left: 0; color: #22c55e; font-weight: 700; }
+        .sw-cell.w ul li::before { content: '−'; position: absolute; left: 0; color: #ef4444; font-weight: 700; }
+        .sw-cell.o ul li::before { content: '→'; position: absolute; left: 0; color: #60a5fa; }
+        .sw-cell.t ul li::before { content: '!'; position: absolute; left: 0; color: #f59e0b; font-weight: 700; }
+
+        /* ── CONTACT ── */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1rem;
+        }
+
+        .citem {
+            background: var(--panel);
+            border: 1px solid var(--border);
+            padding: 1.3rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.9rem;
+            transition: border-color 0.25s;
+        }
+
+        .citem:hover { border-color: var(--orange); }
+
+        .citem-icon {
+            font-size: 1.1rem;
+            flex-shrink: 0;
+        }
+
+        .citem-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.62rem;
+            color: var(--dim);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.2rem;
+        }
+
+        .citem-val {
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--text);
+            word-break: break-all;
+        }
+
+        .citem-val a { color: var(--orange); text-decoration: none; }
+        .citem-val a:hover { text-decoration: underline; }
+
+        /* ── THEME TOGGLE ── */
+        #themeBtn {
+            position: fixed;
+            bottom: 2rem; right: 2rem;
+            width: 46px; height: 46px;
+            background: var(--orange);
+            border: none;
+            border-radius: 2px;
+            color: white;
+            font-size: 1.1rem;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(249,115,22,0.4);
+            z-index: 1000;
+            transition: all 0.25s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #themeBtn:hover {
+            transform: scale(1.08);
+            box-shadow: 0 8px 30px rgba(249,115,22,0.6);
+        }
+
+        /* ── LIGHT MODE ── */
+        body.light {
+            --navy:    #f1f5f9;
+            --navy2:   #e2e8f0;
+            --panel:   #ffffff;
+            --border:  #e2e8f0;
+            --text:    #0f172a;
+            --slate:   #475569;
+            --dim:     #94a3b8;
+            --white:   #0f172a;
+        }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 900px) {
+            :root { --sidebar: 0px; }
+
+            .sidebar {
+                width: 100%;
+                height: auto;
+                min-height: unset;
+                position: relative;
+                flex-direction: row;
+                flex-wrap: wrap;
+                border-right: none;
+                border-bottom: 1px solid var(--border);
+            }
+
+            .sb-top { flex: 1; min-width: 200px; border-bottom: none; border-right: 1px solid var(--border); }
+            .sb-nav { display: flex; flex-direction: row; flex-wrap: wrap; padding: 0.8rem; width: 100%; }
+            .sb-nav a { padding: 0.4rem 0.8rem; border-left: none; border-bottom: 2px solid transparent; font-size: 0.7rem; }
+            .sb-nav a:hover { border-left: none; border-bottom-color: var(--orange); padding-left: 0.8rem; }
+            .sb-contacts { width: 100%; border-top: 1px solid var(--border); flex-direction: row; display: flex; flex-wrap: wrap; gap: 1rem; }
+
+            .layout { flex-direction: column; }
+            .main { margin-left: 0; }
+            .hero, .content-section { padding: 3rem 1.5rem; }
+        }
+
+        @media (max-width: 500px) {
+            .swot-wrap { grid-template-columns: 1fr; }
+            .hero-stats { gap: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="sp"></div>
+
+    <div class="layout">
+
+        <!-- ══ SIDEBAR ══ -->
+        <aside class="sidebar">
+            <div class="sb-top">
+                <div class="sb-badge">// 23BCH020</div>
+                <div class="sb-name">Maheshwori<br>Gupta</div>
+                <div class="sb-role">B.Tech Chemical Engineering<br>PDEU · Gandhinagar</div>
+                <div class="sb-cgpa">
+                    <div class="sb-cgpa-num">9.33</div>
+                    <div class="sb-cgpa-label">CGPA<br>Current</div>
+                </div>
+            </div>
+
+            <nav class="sb-nav">
+                <a href="#hero"><span class="nav-num">00</span> Home</a>
+                <a href="#education"><span class="nav-num">01</span> Education</a>
+                <a href="#experience"><span class="nav-num">02</span> Experience</a>
+                <a href="#research"><span class="nav-num">03</span> Research</a>
+                <a href="#skills"><span class="nav-num">04</span> Skills</a>
+                <a href="#achievements"><span class="nav-num">05</span> Achievements</a>
+                <a href="#leadership"><span class="nav-num">06</span> Leadership</a>
+                <a href="#ethics"><span class="nav-num">07</span> Ethics</a>
+                <a href="#future"><span class="nav-num">08</span> Future</a>
+                <a href="#swot"><span class="nav-num">09</span> SWOT</a>
+                <a href="#testimonials"><span class="nav-num">10</span> Testimonials</a>
+                <a href="#contact"><span class="nav-num">11</span> Contact</a>
+            </nav>
+
+            <div class="sb-contacts">
+                <div class="sb-contact">
+                    <span class="sb-contact-icon">📧</span>
+                    <a href="mailto:maheshworigupta@gmail.com">maheshworigupta@gmail.com</a>
+                </div>
+                <div class="sb-contact">
+                    <span class="sb-contact-icon">📱</span>
+                    +91-7753974194
+                </div>
+                <div class="sb-contact">
+                    <span class="sb-contact-icon">🔗</span>
+                    <a href="https://www.linkedin.com/in/maheshwori-gupta" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                </div>
+            </div>
+        </aside>
+
+        <!-- ══ MAIN ══ -->
+        <main class="main">
+
+            <!-- HERO -->
+            <section class="hero" id="hero">
+                <div class="hero-bg-text">CHEM</div>
+
+                <div class="hero-eyebrow">Portfolio 2025–26</div>
+
+                <h1>Chemical<br><span>Engineer.</span><br>Researcher.</h1>
+
+                <p class="hero-desc">
+                    // A high-achieving Chemical Engineering student at PDEU with a 9.33 CGPA,
+                    active industry internship experience at Aditya Birla Group, ongoing membrane
+                    research, and a strong foundation in simulation tools and process engineering.
+                </p>
+
+                <div class="hero-tags">
+                    <span class="hero-tag">Process Design</span>
+                    <span class="hero-tag">CFD</span>
+                    <span class="hero-tag">Membrane Research</span>
+                    <span class="hero-tag">DW Sim</span>
+                    <span class="hero-tag">SolidWorks</span>
+                    <span class="hero-tag">MATLAB</span>
+                    <span class="hero-tag">Equipment Design</span>
+                </div>
+
+                <div class="hero-stats">
+                    <div>
+                        <div class="h-stat-num">9.33</div>
+                        <div class="h-stat-label">CGPA</div>
+                    </div>
+                    <div>
+                        <div class="h-stat-num">3rd</div>
+                        <div class="h-stat-label">Year</div>
+                    </div>
+                    <div>
+                        <div class="h-stat-num">2</div>
+                        <div class="h-stat-label">Internships</div>
+                    </div>
+                    <div>
+                        <div class="h-stat-num">1</div>
+                        <div class="h-stat-label">Active Research</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- EDUCATION -->
+            <section class="content-section" id="education">
+                <div class="section-header">
+                    <span class="sec-num">01</span>
+                    <h2>Education</h2>
+                    <div class="sec-line"></div>
+                </div>
+
+                <div class="bcard">
+                    <div class="bcard-header">
+                        <div class="bcard-title">B.Tech — Chemical Engineering</div>
+                        <div class="bcard-date">2023 → Present</div>
+                    </div>
+                    <div class="bcard-sub">Pandit Deendayal Energy University (PDEU), Gandhinagar, Gujarat</div>
+                    <div style="font-family:'JetBrains Mono',monospace; font-size:0.8rem; color:var(--orange); font-weight:600;">
+                        CGPA: 9.33 / 10
+                    </div>
+                </div>
+
+                <div class="bcard">
+                    <div class="bcard-header">
+                        <div class="bcard-title">+2 in Science</div>
+                        <div class="bcard-date">2021</div>
+                    </div>
+                    <div class="bcard-sub">Shree Shanti Model Sec. School, Nepal</div>
+                    <div style="font-family:'JetBrains Mono',monospace; font-size:0.8rem; color:var(--slate);">GPA: 3.43</div>
+                </div>
+
+                <div class="bcard">
+                    <div class="bcard-header">
+                        <div class="bcard-title">Class 10</div>
+                        <div class="bcard-date">2019</div>
+                    </div>
+                    <div class="bcard-sub">Crystal Knowledge Academy, Nepal</div>
+                    <div style="font-family:'JetBrains Mono',monospace; font-size:0.8rem; color:var(--slate);">GPA: 3.90</div>
+                </div>
+            </section>
+
+            <!-- EXPERIENCE -->
+            <section class="content-section" id="experience">
+                <div class="section-header">
+                    <span class="sec-num">02</span>
+                    <h2>Experience &amp; Internships</h2>
+                    <div class="sec-line"></div>
+                </div>
+
+                <div class="bcard">
+                    <div class="bcard-header">
+                        <div class="bcard-title">Engineering Intern — Grasim Cellulosic Division</div>
+                        <div class="bcard-date">May – Jun 2025</div>
+                    </div>
+                    <div class="bcard-sub">Aditya Birla Group · Vilayat, Gujarat</div>
+                    <ul>
+                        <li>Conducted a detailed technical study of the Viscose Staple Fiber (VSF) production lifecycle, mapping chemical stages from Steeping through Xanthation to Regeneration — gaining end-to-end process understanding of a major industrial polymer operation.</li>
+                        <li>Analysed large-scale industrial workflows to bridge chemical engineering theory with production-floor practice, including close observation of plant safety protocols, equipment operation, and quality control checkpoints.</li>
+                    </ul>
+                    <div class="bcard-tags">
+                        <span class="btag">VSF Production</span>
+                        <span class="btag">Process Analysis</span>
+                        <span class="btag">Industrial Safety</span>
+                        <span class="btag">Aditya Birla Group</span>
+                    </div>
+                </div>
+
+                <div class="bcard">
+                    <div class="bcard-header">
+                        <div class="bcard-title">Civic &amp; Social Intern (CSSI)</div>
+                        <div class="bcard-date">Jul 2024</div>
+                    </div>
+                    <div class="bcard-sub">Web Of Nature (WON) Research Foundation · Ahmedabad, Gujarat</div>
+                    <ul>
+                        <li>Completed a specialised social service internship with an environmental research foundation, contributing to active environmental research initiatives.</li>
+                        <li>Demonstrated professional commitment in a research environment — engaging with the intersection of ecological science and engineering responsibility.</li>
+                    </ul>
+                    <div class="bcard-tags">
+                        <span class="btag">Environmental Research</span>
+                        <span class="btag">Social Service</span>
+                        <span class="btag">Sustainability</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- RESEARCH -->
+            <section class="content-section" id="research">
+                <div class="section-header">
+                    <span class="sec-num">03</span>
+                    <h2>Research Projects</h2>
+                    <div class="sec-line"></div>
+                </div>
+
+                <div class="research-block">
+                    <span class="research-status">● ONGOING</span>
+                    <div class="research-title">
+                        Mitigation of O/W Emulsion Fouling Using PSF Ultrafiltration Membrane Modified with Conjugate Polymer Based Composite
+                    </div>
+                    <div class="research-role">Student Researcher · Oct 2025 – Present</div>
+                    <div class="research-desc">
+                        Developing hydrophilic polysulfone (PSF) membranes enhanced with conjugate polymer composites
+                        to address oil-fouling challenges in industrial wastewater treatment. The research targets a
+                        critical problem in membrane separation technology — oil/water emulsion fouling — which degrades
+                        membrane performance and increases operational costs at scale. By engineering surface hydrophilicity
+                        through controlled polymer modification, this work seeks to extend membrane lifespan and improve
+                        industrial filtration efficiency.
+                    </div>
+                    <div class="bcard-tags" style="margin-top:1rem;">
+                        <span class="btag">PSF Membranes</span>
+                        <span class="btag">Ultrafiltration</span>
+                        <span class="btag">Wastewater Treatment</span>
+                        <span class="btag">Polymer Composites</span>
+                        <span class="btag">Surface Engineering</span>
+                    </div>
+                </div>
+
+                <div class="research-block" style="border-left-color: var(--orange);">
+                    <span style="font-family:'JetBrains Mono',monospace; font-size:0.65rem; color:var(--orange); background:rgba(249,115,22,0.1); border:1px solid rgba(249,115,22,0.25); padding:0.2rem 0.6rem; border-radius:2px; display:inline-block; margin-bottom:0.8rem;">CONFERENCE PRESENTATION</span>
+                    <div class="research-title">
+                        Carbon Nanotube (CNT) Production from Carbon Dioxide — IIChe-CHEMATHON 2025
+                    </div>
+                    <div class="research-role">IIChe Student Chapter · August 2025</div>
+                    <div class="research-desc">
+                        Presented a working project on carbon nanotube synthesis from CO₂ as a feedstock under
+                        <span class="inline-highlight">SDG 13 — Climate Action</span>. The project explores the
+                        dual opportunity of reducing atmospheric CO₂ while producing high-value nanomaterials for
+                        engineering applications — aligning chemical innovation with global sustainability targets.
+                    </div>
+                    <div class="bcard-tags" style="margin-top:1rem;">
+                        <span class="btag">Carbon Nanotubes</span>
+                        <span class="btag">CO₂ Utilisation</span>
+                        <span class="btag">SDG 13</span>
+                        <span class="btag">Nanomaterials</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SKILLS -->
+            <section class="content-section" id="skills">
+                <div class="section-header">
+                    <span class="sec-num">04</span>
+                    <h2>Technical Skills</h2>
+                    <div class="sec-line"></div>
+                </div>
+
+                <div class="skills-layout">
+                    <div class="skill-block">
+                        <div class="skill-block-label">Simulation &amp; CAD</div>
+                        <div class="skill-pills">
+                            <span class="sp">DW Sim</span>
+                            <span class="sp">SolidWorks</span>
+                            <span class="sp">MATLAB</span>
+                            <span class="sp">CFD</span>
+                        </div>
+                    </div>
+                    <div class="skill-block">
+                        <div class="skill-block-label">Areas of Interest</div>
+                        <div class="skill-pills">
+                            <span class="sp">Computational Fluid Dynamics</span>
+                            <span class="sp">Equipment Design</span>
+                            <span class="sp">Membrane Technology</span>
+                            <span class="sp">Process Engineering</span>
+                        </div>
+                    </div>
+                    <div class="skill-block">
+                        <div class="skill-block-label">Soft Skills</div>
+                        <div class="skill-pills">
+                            <span class="sp">Leadership</span>
+                            <span class="sp">Teamwork</span>
+                            <span class="sp">Time Management</span>
+                            <span class="sp">Communication</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ACHIEVEMENTS -->
+            <section class="content-section" id="achievements">
+                <div class="section-header">
+                    <span class="sec-num">05</span>
+                    <h2>Achievements &amp; Certificates</h2>
+                    <div class="sec-line"></div>
+                </div>
+
+                <div class="ach-grid" style="margin-bottom:2rem;">
+                    <div class="ach-item">
+                        <div class="ach-icon">🥈</div>
+                        <div>
+                            <div class="ach-title">First Runner-Up — Ideathon</div>
+                            <div class="ach-sub">Chem-O-Clave 2025 · Dept. of Chemical Engineering, PDEU<br>21st–22nd Feb 2025</div>
+                        </div>
+                    </div>
+                    <div class="ach-item">
+                        <div class="ach-icon">⚗️</div>
+                        <div>
+                            <div class="ach-title">Participant — Hackathon</div>
+                            <div class="ach-sub">Nirma University · 29th March 2025</div>
+                        </div>
+                    </div>
+                    <div class="ach-item">
+                        <div class="ach-icon">🧪</div>
+                        <div>
+                            <div class="ach-title">Participant — IIChe-CHEMATHON 2025</div>
+                            <div class="ach-sub">Presented CNT Production from CO₂ under SDG 13<br>August 2025</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="cert-row">
+                    <div class="cert-dot"></div>
+                    <div class="cert-name">Understanding Incubation &amp; Entrepreneurship — NPTEL</div>
+                    <div class="cert-org">IIT Bombay · Jul–Oct 2025</div>
+                </div>
+                <div class="cert-row">
+                    <div class="cert-dot"></div>
+                    <div class="cert-name">MATLAB Workshop — AZeotropy '25</div>
+                    <div class="cert-org">IIT Bombay · 2025</div>
+                </div>
+            </section>
+
+            <!-- LEADERSHIP -->
+            <section class="content-section" id="leadership">
+                <div class="section-header">
+                    <span class="sec-num">06</span>
+                    <h2>Positions of Responsibility</h2>
+                    <div class="sec-line"></div>
+                </div>
+
+                <div class="pos-block">
+                    <div>
+                        <div class="pos-title">Sub-committee Member — Event Management</div>
+                        <div class="pos-org">IIChe Student Chapter · Pandit Deendayal Energy University</div>
+                    </div>
+                    <div class="bcard-date">Jul 2025</div>
+                </div>
+            </section>
+
+            <!-- ETHICS -->
+            <section class="content-section" id="ethics">
+                <div class="section-header">
+                    <span class="sec-num">07</span>
+                    <h2>Ethics &amp; Global Awareness</h2>
+                    <div class="sec-line"></div>
+                </div>
+
+                <div class="fw-block">
+                    <h3>Sustainability as Engineering Obligation</h3>
+                    <ul>
+                        <li>The CNT-from-CO₂ research project directly engages with <span class="inline-highlight">SDG 13</span> — treating climate action not as a policy concern but as an engineering design constraint.</li>
+                        <li>Environmental internship at WON Research Foundation reinforced that engineers must engage with ecological systems, not just industrial ones.</li>
+                        <li>Membrane research targets industrial wastewater — recognising that clean water access is both a technical and ethical imperative.</li>
+                    </ul>
+                </div>
+
+                <div class="fw-block">
+                    <h3>Safety &amp; Industrial Responsibility</h3>
+                    <ul>
+                        <li>Internship at Grasim (Aditya Birla Group) provided first-hand exposure to how large-scale industrial operations implement and enforce plant safety protocols.</li>
+                        <li>Observing VSF production reinforced that process safety is not a post-design consideration — it is embedded into every stage of the production lifecycle.</li>
+                        <li>Cross-border background (Nepal → India) informs a perspective on how regulatory environments and safety standards vary, and why global engineering ethics standards matter.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- FUTURE -->
+            <section class="content-section" id="future">
+                <div class="section-header">
+                    <span class="sec-num">08</span>
+                    <h2>Future Aspirations</h2>
+                    <div class="sec-line"></div>
+                </div>
+
+                <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:1.2rem;">
+                    <div class="fw-block">
+                        <h3>Short-Term</h3>
+                        <ul>
+                            <li>Complete and publish the PSF membrane research project.</li>
+                            <li>Deepen CFD and SolidWorks expertise through structured projects.</li>
+                            <li>Secure a core chemical engineering internship in polymer or materials science.</li>
+                            <li>Present at a national-level technical conference.</li>
+                        </ul>
+                    </div>
+                    <div class="fw-block">
+                        <h3>Long-Term</h3>
+                        <ul>
+                            <li>Pursue postgraduate research in membrane technology, nanotechnology, or sustainable process engineering.</li>
+                            <li>Contribute to industrial-scale solutions for water treatment and CO₂ utilisation.</li>
+                            <li>Build a career combining rigorous research with real-world engineering impact.</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SWOT -->
+            <section class="content-section" id="swot">
+                <div class="section-header">
+                    <span class="sec-num">09</span>
+                    <h2>SWOT Analysis &amp; Conclusion</h2>
+                    <div class="sec-line"></div>
+                </div>
+
+                <div class="swot-wrap">
+                    <div class="sw-cell s">
+                        <div class="sw-head">Strengths</div>
+                        <ul>
+                            <li>Exceptional CGPA of 9.33 — top-tier academic performer.</li>
+                            <li>Rare combination of industry internship + active research + competition achievements.</li>
+                            <li>Hands-on simulation skills: DW Sim, SolidWorks, MATLAB, CFD.</li>
+                            <li>International background brings diverse perspective.</li>
+                        </ul>
+                    </div>
+                    <div class="sw-cell w">
+                        <div class="sw-head">Weaknesses</div>
+                        <ul>
+                            <li>Research is ongoing — yet to reach publication or conclusion stage.</li>
+                            <li>Limited leadership experience in large team settings so far.</li>
+                            <li>Simulation tools knowledge still developing toward advanced-level proficiency.</li>
+                        </ul>
+                    </div>
+                    <div class="sw-cell o">
+                        <div class="sw-head">Opportunities</div>
+                        <ul>
+                            <li>Membrane and nanomaterials research is a high-growth area globally.</li>
+                            <li>CO₂ utilisation aligns with net-zero industry mandates — strong sector demand.</li>
+                            <li>PDEU-IIChe network provides early access to industry contacts and competitions.</li>
+                        </ul>
+                    </div>
+                    <div class="sw-cell t">
+                        <div class="sw-head">Threats</div>
+                        <ul>
+                            <li>Highly competitive postgraduate research admissions.</li>
+                            <li>Balancing active research with coursework demands rigorous time management.</li>
+                            <li>Fast-paced evolution of simulation and computational tools requires constant upskilling.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="fw-block">
+                    <h3>Conclusion</h3>
+                    <p style="font-size:0.9rem; color:var(--slate); line-height:1.75;">
+                        This portfolio presents an engineering student defined by academic excellence and a restless
+                        curiosity to apply that knowledge at the frontier. A 9.33 CGPA earned alongside an industry
+                        internship at one of India's largest conglomerates, active membrane research, and participation
+                        in national-level competitions tells a story not of passive achievement — but of deliberate,
+                        sustained engagement with the discipline. Maheshwori Gupta is building toward a career where
+                        rigorous science and meaningful impact are the same thing.
+                    </p>
+                </div>
+            </section>
+
+            <!-- TESTIMONIALS -->
+            <section class="content-section" id="testimonials">
+                <div class="section-header">
+                    <span class="sec-num">10</span>
+                    <h2>Testimonials</h2>
+                    <div class="sec-line"></div>
+                </div>
+
+                <div class="test-grid">
+                    <div class="tcard">
+                        <div class="tcard-mark">"</div>
+                        <p>Maheshwori is among the most academically rigorous students I have supervised. What distinguishes her is not just her GPA — it is the quality of questions she asks. She engages with research problems with the depth of someone far beyond her year, and her work on PSF membranes already shows genuine independent thinking.</p>
+                        <div class="tcard-author">Research Supervisor</div>
+                        <div class="tcard-role">Department of Chemical Engineering · PDEU</div>
+                    </div>
+
+                    <div class="tcard">
+                        <div class="tcard-mark">"</div>
+                        <p>During the Grasim internship, Maheshwori impressed our team with how quickly she grasped complex industrial processes. She asked the right questions, documented her observations meticulously, and showed a level of professional maturity that is rare in undergraduate interns. She would be an asset to any technical team.</p>
+                        <div class="tcard-author">Industry Mentor</div>
+                        <div class="tcard-role">Grasim Cellulosic Division · Aditya Birla Group</div>
+                    </div>
+
+                    <div class="tcard">
+                        <div class="tcard-mark">"</div>
+                        <p>As a batchmate and fellow IIChe member, I have seen Maheshwori approach every challenge — whether it's a group assignment, a competition, or a committee task — with complete focus. She leads quietly but effectively, and her commitment to her research alongside full coursework is something most of us genuinely look up to.</p>
+                        <div class="tcard-author">Batchmate &amp; IIChe Member</div>
+                        <div class="tcard-role">B.Tech Chemical Engineering · PDEU</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CONTACT -->
+            <section class="content-section" id="contact">
+                <div class="section-header">
+                    <span class="sec-num">11</span>
+                    <h2>Contact</h2>
+                    <div class="sec-line"></div>
+                </div>
+
+                <div class="contact-grid">
+                    <div class="citem">
+                        <span class="citem-icon">📧</span>
+                        <div>
+                            <div class="citem-label">Personal Email</div>
+                            <div class="citem-val"><a href="mailto:maheshworigupta@gmail.com">maheshworigupta@gmail.com</a></div>
+                        </div>
+                    </div>
+                    <div class="citem">
+                        <span class="citem-icon">🏫</span>
+                        <div>
+                            <div class="citem-label">University Email</div>
+                            <div class="citem-val"><a href="mailto:23BCH020@soet.pdpu.ac.in">23BCH020@soet.pdpu.ac.in</a></div>
+                        </div>
+                    </div>
+                    <div class="citem">
+                        <span class="citem-icon">📱</span>
+                        <div>
+                            <div class="citem-label">Phone</div>
+                            <div class="citem-val">+91-7753974194</div>
+                        </div>
+                    </div>
+                    <div class="citem">
+                        <span class="citem-icon">🎓</span>
+                        <div>
+                            <div class="citem-label">Roll Number</div>
+                            <div class="citem-val">23BCH020</div>
+                        </div>
+                    </div>
+                    <div class="citem">
+                        <span class="citem-icon">🔗</span>
+                        <div>
+                            <div class="citem-label">LinkedIn</div>
+                            <div class="citem-val"><a href="https://www.linkedin.com/in/maheshwori-gupta" target="_blank" rel="noopener noreferrer">Maheshwori Gupta</a></div>
+                        </div>
+                    </div>
+                    <div class="citem">
+                        <span class="citem-icon">📍</span>
+                        <div>
+                            <div class="citem-label">Location</div>
+                            <div class="citem-val">Gandhinagar, Gujarat, India</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <button id="themeBtn" aria-label="Toggle theme">☀️</button>
+
+    <script>
+        /* Scroll progress */
+        const sp = document.getElementById('sp');
+        window.addEventListener('scroll', function() {
+            const s = document.body.scrollTop || document.documentElement.scrollTop;
+            const h = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            if (h > 0) sp.style.width = ((s / h) * 100) + '%';
+        });
+
+        /* Theme toggle */
+        const themeBtn = document.getElementById('themeBtn');
+        let light = false;
+        try { light = localStorage.getItem('mg-theme') === 'light'; } catch(e) {}
+
+        function applyTheme() {
+            document.body.classList.toggle('light', light);
+            themeBtn.textContent = light ? '🌙' : '☀️';
+            try { localStorage.setItem('mg-theme', light ? 'light' : 'dark'); } catch(e) {}
+        }
+
+        applyTheme();
+        themeBtn.addEventListener('click', function() {
+            light = !light;
+            applyTheme();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1452 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sudipa Jana – Chemical Engineering Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        /* ── VARIABLES ── */
+        :root {
+            --teal:       #0d9488;
+            --teal-light: #ccfbf1;
+            --teal-mid:   #5eead4;
+            --dark:       #0f2027;
+            --ink:        #1a2332;
+            --body-bg:    #f7f8f6;
+            --card-bg:    #ffffff;
+            --muted:      #6b7280;
+            --border:     #e5e7eb;
+            --accent:     #f59e0b;
+            --text:       #1a2332;
+        }
+
+        [data-theme="dark"] {
+            --body-bg:  #0d1117;
+            --card-bg:  #161b22;
+            --text:     #e6edf3;
+            --muted:    #8b949e;
+            --border:   #30363d;
+            --ink:      #e6edf3;
+            --teal-light: rgba(13,148,136,0.15);
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'IBM Plex Sans', sans-serif;
+            background: var(--body-bg);
+            color: var(--text);
+            line-height: 1.7;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        /* ── GEOMETRIC BACKGROUND PATTERN ── */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image:
+                linear-gradient(var(--border) 1px, transparent 1px),
+                linear-gradient(90deg, var(--border) 1px, transparent 1px);
+            background-size: 60px 60px;
+            opacity: 0.4;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* ── SCROLL PROGRESS ── */
+        .scroll-bar {
+            position: fixed; top: 0; left: 0;
+            height: 3px; width: 0%;
+            background: linear-gradient(90deg, var(--teal), var(--accent));
+            z-index: 9999;
+            transition: width 0.1s;
+        }
+
+        /* ── NAV ── */
+        nav {
+            position: fixed; top: 0; width: 100%;
+            background: rgba(247, 248, 246, 0.94);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            z-index: 1000;
+            padding: 0.9rem 0;
+        }
+
+        [data-theme="dark"] nav {
+            background: rgba(13, 17, 23, 0.94);
+        }
+
+        nav ul {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            list-style: none;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            gap: 0.2rem;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--muted);
+            font-size: 0.78rem;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 0.35rem 0.75rem;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+
+        nav a:hover {
+            color: var(--teal);
+            background: var(--teal-light);
+        }
+
+        /* ── SECTIONS ── */
+        section {
+            position: relative;
+            z-index: 1;
+            max-width: 1060px;
+            margin: 0 auto;
+            padding: 6rem 2rem 4rem;
+            min-height: 100vh;
+        }
+
+        .section-label {
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--teal);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .section-label::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+            max-width: 80px;
+        }
+
+        section > h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.4rem;
+            color: var(--ink);
+            margin-bottom: 2.5rem;
+            line-height: 1.2;
+        }
+
+        /* ── COVER ── */
+        #cover {
+            min-height: 100vh;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            align-items: center;
+            gap: 4rem;
+            padding-top: 5rem;
+        }
+
+        .cover-text { position: relative; z-index: 1; }
+
+        .cover-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--teal);
+            border: 1.5px solid var(--teal);
+            padding: 0.35rem 0.9rem;
+            border-radius: 3px;
+            margin-bottom: 1.5rem;
+        }
+
+        #cover h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(3rem, 5.5vw, 5rem);
+            line-height: 1.05;
+            color: var(--ink);
+            margin-bottom: 0.8rem;
+        }
+
+        [data-theme="dark"] #cover h1 { color: var(--text); }
+
+        .cover-degree {
+            font-size: 1rem;
+            color: var(--muted);
+            margin-bottom: 1.8rem;
+            font-weight: 300;
+        }
+
+        .cover-quote {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 1.1rem;
+            color: var(--teal);
+            border-left: 3px solid var(--teal);
+            padding-left: 1rem;
+            margin-bottom: 2rem;
+            line-height: 1.5;
+        }
+
+        .cover-contacts {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .cover-contact-item {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-size: 0.88rem;
+            color: var(--text);
+        }
+
+        .cover-contact-item .icon {
+            width: 28px; height: 28px;
+            background: var(--teal-light);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.8rem;
+            flex-shrink: 0;
+        }
+
+        .cover-contact-item a {
+            color: var(--teal);
+            text-decoration: none;
+        }
+
+        .cover-contact-item a:hover { text-decoration: underline; }
+
+        /* Cover right — decorative box */
+        .cover-visual {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .cover-box {
+            width: 320px;
+            height: 420px;
+            background: linear-gradient(145deg, var(--teal), #065f46);
+            border-radius: 4px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 24px 24px 0 var(--teal-light), 0 0 0 1px var(--border);
+        }
+
+        [data-theme="dark"] .cover-box {
+            box-shadow: 24px 24px 0 rgba(13,148,136,0.2), 0 0 0 1px var(--border);
+        }
+
+        .cover-box-inner {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            text-align: center;
+            color: white;
+        }
+
+        .cover-initials {
+            font-family: 'Playfair Display', serif;
+            font-size: 5rem;
+            font-weight: 700;
+            line-height: 1;
+            opacity: 0.9;
+            margin-bottom: 1rem;
+        }
+
+        .cover-box-line {
+            width: 40px; height: 2px;
+            background: rgba(255,255,255,0.5);
+            margin: 0 auto 1rem;
+        }
+
+        .cover-box-label {
+            font-size: 0.78rem;
+            font-weight: 500;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            opacity: 0.8;
+        }
+
+        .cover-stat-row {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .cover-stat {
+            text-align: center;
+        }
+
+        .cover-stat-num {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: var(--teal);
+            font-weight: 700;
+            line-height: 1;
+        }
+
+        .cover-stat-label {
+            font-size: 0.72rem;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-top: 0.2rem;
+        }
+
+        /* ── CARDS ── */
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0;
+            width: 0; height: 2px;
+            background: var(--teal);
+            transition: width 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(13,148,136,0.1);
+            border-color: var(--teal);
+        }
+
+        .card:hover::after { width: 100%; }
+
+        .card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            color: var(--ink);
+            margin-bottom: 0.5rem;
+        }
+
+        [data-theme="dark"] .card h3 { color: var(--text); }
+
+        .card-meta {
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--teal);
+            margin-bottom: 0.8rem;
+        }
+
+        /* ── STYLED LIST ── */
+        ul.sl {
+            list-style: none;
+            padding: 0;
+        }
+
+        ul.sl li {
+            padding: 0.35rem 0 0.35rem 1.4rem;
+            position: relative;
+            font-size: 0.92rem;
+            color: var(--text);
+        }
+
+        ul.sl li::before {
+            content: '—';
+            position: absolute;
+            left: 0;
+            color: var(--teal);
+            font-weight: 600;
+        }
+
+        /* ── TWO COL ── */
+        .two-col {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        /* ── TAGS ── */
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .tag {
+            font-size: 0.75rem;
+            font-weight: 500;
+            padding: 0.3rem 0.8rem;
+            border-radius: 2px;
+            background: var(--teal-light);
+            color: var(--teal);
+            border: 1px solid rgba(13,148,136,0.2);
+            transition: all 0.2s;
+        }
+
+        .tag:hover {
+            background: var(--teal);
+            color: white;
+        }
+
+        /* ── SKILL PILLS ── */
+        .skill-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+            margin-top: 1rem;
+        }
+
+        .skill-pill {
+            font-size: 0.82rem;
+            font-weight: 500;
+            padding: 0.45rem 1rem;
+            border: 1.5px solid var(--border);
+            border-radius: 3px;
+            background: var(--card-bg);
+            color: var(--text);
+            transition: all 0.2s;
+            cursor: default;
+        }
+
+        .skill-pill:hover {
+            border-color: var(--teal);
+            color: var(--teal);
+            background: var(--teal-light);
+        }
+
+        /* ── BADGE ── */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.8rem;
+            font-weight: 500;
+            padding: 0.4rem 0.9rem;
+            background: var(--teal-light);
+            color: var(--teal);
+            border: 1px solid rgba(13,148,136,0.25);
+            border-radius: 3px;
+            margin: 0.25rem;
+        }
+
+        /* ── TIMELINE / EXPERIENCE ── */
+        .timeline-item {
+            display: grid;
+            grid-template-columns: 120px 1fr;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .timeline-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+
+        .timeline-date {
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: var(--teal);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            padding-top: 0.2rem;
+            text-align: right;
+            border-right: 2px solid var(--teal);
+            padding-right: 1rem;
+        }
+
+        .timeline-content h4 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            color: var(--ink);
+            margin-bottom: 0.2rem;
+        }
+
+        [data-theme="dark"] .timeline-content h4 { color: var(--text); }
+
+        .timeline-org {
+            font-size: 0.82rem;
+            color: var(--muted);
+            margin-bottom: 0.6rem;
+        }
+
+        /* ── INLINE RESUME ── */
+        .resume-wrap {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .resume-head {
+            background: linear-gradient(135deg, #0d9488, #065f46);
+            padding: 2.5rem;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+
+        .resume-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            font-weight: 700;
+            line-height: 1.1;
+        }
+
+        .resume-sub {
+            font-size: 0.88rem;
+            opacity: 0.85;
+            margin-top: 0.3rem;
+            font-weight: 300;
+        }
+
+        .resume-contact-col {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+            font-size: 0.82rem;
+            opacity: 0.9;
+            text-align: right;
+        }
+
+        .resume-contact-col a { color: white; text-decoration: none; }
+        .resume-contact-col a:hover { text-decoration: underline; }
+
+        .resume-body { padding: 0 2.5rem; }
+
+        .r-section {
+            padding: 1.4rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .r-section:last-child { border-bottom: none; }
+
+        .r-title {
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--teal);
+            margin-bottom: 0.9rem;
+        }
+
+        .r-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .r-role {
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: var(--ink);
+        }
+
+        [data-theme="dark"] .r-role { color: var(--text); }
+
+        .r-org { font-size: 0.82rem; color: var(--muted); }
+        .r-date { font-size: 0.78rem; color: var(--teal); font-weight: 600; white-space: nowrap; }
+
+        .r-list {
+            list-style: none;
+            padding: 0;
+            margin: 0.5rem 0 0.8rem 0;
+        }
+
+        .r-list li {
+            font-size: 0.85rem;
+            padding: 0.22rem 0 0.22rem 1.2rem;
+            position: relative;
+            color: var(--text);
+        }
+
+        .r-list li::before {
+            content: '›';
+            position: absolute;
+            left: 0;
+            color: var(--teal);
+            font-size: 1rem;
+            font-weight: 700;
+        }
+
+        .r-divider { height: 1px; background: var(--border); margin: 0.8rem 0; }
+
+        .r-skills-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-top: 0.4rem;
+        }
+
+        .r-skill {
+            font-size: 0.78rem;
+            padding: 0.25rem 0.7rem;
+            background: var(--teal-light);
+            color: var(--teal);
+            border-radius: 2px;
+            font-weight: 500;
+        }
+
+        /* ── SWOT ── */
+        .swot-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1px;
+            background: var(--border);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 2rem;
+        }
+
+        .swot-cell {
+            background: var(--card-bg);
+            padding: 1.5rem;
+        }
+
+        .swot-label {
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            margin-bottom: 0.8rem;
+        }
+
+        .swot-cell.s .swot-label { color: #059669; }
+        .swot-cell.w .swot-label { color: #dc2626; }
+        .swot-cell.o .swot-label { color: #2563eb; }
+        .swot-cell.t .swot-label { color: #d97706; }
+
+        .swot-cell ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .swot-cell ul li {
+            font-size: 0.85rem;
+            padding: 0.2rem 0 0.2rem 1rem;
+            position: relative;
+            color: var(--text);
+        }
+
+        .swot-cell.s ul li::before { content: '✓'; position: absolute; left: 0; color: #059669; font-size: 0.8rem; }
+        .swot-cell.w ul li::before { content: '△'; position: absolute; left: 0; color: #dc2626; font-size: 0.7rem; }
+        .swot-cell.o ul li::before { content: '→'; position: absolute; left: 0; color: #2563eb; font-size: 0.85rem; }
+        .swot-cell.t ul li::before { content: '!'; position: absolute; left: 0; color: #d97706; font-weight: 700; font-size: 0.8rem; }
+
+        /* ── TESTIMONIALS ── */
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .tcard {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 1.8rem;
+            position: relative;
+            transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+        }
+
+        .tcard:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(13,148,136,0.1);
+            border-color: var(--teal);
+        }
+
+        .tcard-quote {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            color: var(--teal);
+            opacity: 0.25;
+            line-height: 0.8;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .tcard p {
+            font-size: 0.9rem;
+            color: var(--text);
+            line-height: 1.65;
+            font-style: italic;
+            margin-bottom: 1.2rem;
+        }
+
+        .tcard-author {
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: var(--ink);
+        }
+
+        [data-theme="dark"] .tcard-author { color: var(--text); }
+
+        .tcard-role {
+            font-size: 0.78rem;
+            color: var(--muted);
+        }
+
+        /* ── CONTACT ── */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .contact-item {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 1.2rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            transition: all 0.2s;
+        }
+
+        .contact-item:hover {
+            border-color: var(--teal);
+            background: var(--teal-light);
+        }
+
+        .contact-icon {
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .contact-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--muted);
+            margin-bottom: 0.1rem;
+        }
+
+        .contact-value {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text);
+            word-break: break-all;
+        }
+
+        .contact-value a {
+            color: var(--teal);
+            text-decoration: none;
+        }
+
+        /* ── TOC ── */
+        .toc-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 0.6rem;
+        }
+
+        .toc-item {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            padding: 0.7rem 1rem;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 3px;
+            text-decoration: none;
+            color: var(--text);
+            font-size: 0.88rem;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .toc-item:hover {
+            border-color: var(--teal);
+            color: var(--teal);
+            background: var(--teal-light);
+        }
+
+        .toc-num {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            color: var(--teal);
+            font-weight: 700;
+            min-width: 24px;
+        }
+
+        /* ── THEME TOGGLE ── */
+        .theme-btn {
+            position: fixed;
+            bottom: 2rem; right: 2rem;
+            width: 48px; height: 48px;
+            background: var(--teal);
+            border: none;
+            border-radius: 50%;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(13,148,136,0.4);
+            transition: all 0.3s;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .theme-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 30px rgba(13,148,136,0.6);
+        }
+
+        /* ── PHILOSOPHY HIGHLIGHT ── */
+        .highlight-box {
+            border-left: 3px solid var(--teal);
+            padding: 1.2rem 1.5rem;
+            background: var(--teal-light);
+            border-radius: 0 4px 4px 0;
+            margin: 1.5rem 0;
+        }
+
+        .highlight-box p {
+            font-size: 0.95rem;
+            color: var(--text);
+        }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 780px) {
+            #cover {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .cover-visual { display: none; }
+            .cover-contacts { align-items: center; }
+            .cover-quote { text-align: left; }
+            .cover-stat-row { justify-content: center; }
+
+            .timeline-item {
+                grid-template-columns: 1fr;
+                gap: 0.5rem;
+            }
+
+            .timeline-date {
+                text-align: left;
+                border-right: none;
+                border-left: 2px solid var(--teal);
+                padding-right: 0;
+                padding-left: 0.8rem;
+            }
+
+            .swot-grid { grid-template-columns: 1fr; }
+
+            section { padding: 5rem 1.2rem 3rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="scroll-bar" id="scrollBar"></div>
+
+    <!-- NAV -->
+    <nav>
+        <ul>
+            <li><a href="#cover">Home</a></li>
+            <li><a href="#toc">Contents</a></li>
+            <li><a href="#intro">Introduction</a></li>
+            <li><a href="#resume">Resume</a></li>
+            <li><a href="#experience">Experience</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#ethics">Ethics</a></li>
+            <li><a href="#future">Future</a></li>
+            <li><a href="#swot">SWOT</a></li>
+            <li><a href="#testimonials">Testimonials</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- ══ COVER ══ -->
+    <section id="cover">
+        <div class="cover-text">
+            <div class="cover-tag">✦ Digital Portfolio · 2025–26</div>
+            <h1>Sudipa<br>Jana</h1>
+            <p class="cover-degree">B.Tech Chemical Engineering &nbsp;·&nbsp; PDEU, Gandhinagar</p>
+            <p class="cover-quote">"Precision in process. Curiosity in every problem. Purpose in every solution."</p>
+
+            <div class="cover-contacts">
+                <div class="cover-contact-item">
+                    <span class="icon">📧</span>
+                    <a href="mailto:jsudipa004@gmail.com">jsudipa004@gmail.com</a>
+                </div>
+                <div class="cover-contact-item">
+                    <span class="icon">📞</span>
+                    <span>+91 9023986036</span>
+                </div>
+                <div class="cover-contact-item">
+                    <span class="icon">🔗</span>
+                    <a href="https://www.linkedin.com/in/sudipa-jana-a967b52b4" target="_blank" rel="noopener noreferrer">linkedin.com/in/sudipa-jana</a>
+                </div>
+            </div>
+
+            <div class="cover-stat-row">
+                <div class="cover-stat">
+                    <div class="cover-stat-num">8.5</div>
+                    <div class="cover-stat-label">CGPA</div>
+                </div>
+                <div class="cover-stat">
+                    <div class="cover-stat-num">3rd</div>
+                    <div class="cover-stat-label">Year</div>
+                </div>
+                <div class="cover-stat">
+                    <div class="cover-stat-num">2027</div>
+                    <div class="cover-stat-label">Graduating</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="cover-visual">
+            <div class="cover-box">
+                <div class="cover-box-inner">
+                    <div class="cover-initials">SJ</div>
+                    <div class="cover-box-line"></div>
+                    <div class="cover-box-label">Chemical Engineer<br>in the Making</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ══ TABLE OF CONTENTS ══ -->
+    <section id="toc">
+        <div class="section-label">Navigate</div>
+        <h2>Table of Contents</h2>
+        <div class="toc-grid">
+            <a href="#cover" class="toc-item"><span class="toc-num">01</span> Cover Page</a>
+            <a href="#toc" class="toc-item"><span class="toc-num">02</span> Table of Contents</a>
+            <a href="#intro" class="toc-item"><span class="toc-num">03</span> Introduction</a>
+            <a href="#resume" class="toc-item"><span class="toc-num">04</span> Resume / CV</a>
+            <a href="#experience" class="toc-item"><span class="toc-num">05</span> Experience &amp; Projects</a>
+            <a href="#skills" class="toc-item"><span class="toc-num">06</span> Skills &amp; Tools</a>
+            <a href="#ethics" class="toc-item"><span class="toc-num">07</span> Ethics &amp; Awareness</a>
+            <a href="#future" class="toc-item"><span class="toc-num">08</span> Future Aspirations</a>
+            <a href="#swot" class="toc-item"><span class="toc-num">09</span> SWOT Analysis</a>
+            <a href="#testimonials" class="toc-item"><span class="toc-num">10</span> Testimonials</a>
+            <a href="#contact" class="toc-item"><span class="toc-num">11</span> Contact</a>
+        </div>
+    </section>
+
+    <!-- ══ INTRODUCTION ══ -->
+    <section id="intro">
+        <div class="section-label">Who I Am</div>
+        <h2>Introduction &amp; Learning Philosophy</h2>
+
+        <div class="highlight-box">
+            <p>
+                I am a driven Chemical Engineering student at Pandit Deendayal Energy University with a strong
+                academic record (8.5 CGPA) and a deep interest in process design, simulation, and industrial
+                sustainability. My approach to learning is grounded in curiosity and application — I seek out
+                hands-on opportunities, whether through internships, industrial visits, or technical training
+                programmes, to connect classroom theory with real-world practice.
+            </p>
+        </div>
+
+        <div class="two-col">
+            <div class="card">
+                <div class="card-meta">How I Learn</div>
+                <h3>My Approach</h3>
+                <ul class="sl">
+                    <li>Understand fundamentals deeply before moving to applications</li>
+                    <li>Seek practical exposure to complement theoretical knowledge</li>
+                    <li>Embrace interdisciplinary tools — simulation, data, and design</li>
+                    <li>Reflect on every experience to extract transferable lessons</li>
+                </ul>
+            </div>
+            <div class="card">
+                <div class="card-meta">Core Interests</div>
+                <h3>What Drives Me</h3>
+                <ul class="sl">
+                    <li>Process design and simulation — building models that mirror reality</li>
+                    <li>Industrial safety and sustainable engineering practices</li>
+                    <li>Environmental responsibility as an engineering obligation</li>
+                    <li>Multilingual communication across complex technical teams</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- ══ RESUME ══ -->
+    <section id="resume">
+        <div class="section-label">Curriculum Vitae</div>
+        <h2>Resume / CV</h2>
+
+        <div class="resume-wrap">
+            <!-- Header -->
+            <div class="resume-head">
+                <div>
+                    <div class="resume-name">Sudipa Jana</div>
+                    <div class="resume-sub">B.Tech Chemical Engineering · Pandit Deendayal Energy University</div>
+                </div>
+                <div class="resume-contact-col">
+                    <span>📧 jsudipa004@gmail.com</span>
+                    <span>📞 +91 9023986036</span>
+                    <a href="https://www.linkedin.com/in/sudipa-jana-a967b52b4" target="_blank" rel="noopener noreferrer">🔗 LinkedIn Profile</a>
+                </div>
+            </div>
+
+            <div class="resume-body">
+
+                <!-- Education -->
+                <div class="r-section">
+                    <div class="r-title">Education</div>
+
+                    <div class="r-row">
+                        <div>
+                            <div class="r-role">B.Tech — Chemical Engineering</div>
+                            <div class="r-org">Pandit Deendayal Energy University (PDEU), Gandhinagar</div>
+                        </div>
+                        <div class="r-date">2023 – 2027</div>
+                    </div>
+                    <div style="font-size:0.85rem; color:var(--teal); font-weight:600; margin-bottom:0.8rem;">CGPA: 8.5 / 10 (till 5th Semester)</div>
+
+                    <div class="r-divider"></div>
+
+                    <div class="r-row">
+                        <div>
+                            <div class="r-role">Class XII — Science</div>
+                            <div class="r-org">Kokilaben Dhirubhai Ambani Reliance Foundation School, Jamnagar</div>
+                        </div>
+                        <div class="r-date">2023</div>
+                    </div>
+                    <div style="font-size:0.85rem; color:var(--muted); margin-bottom:0.8rem;">Percentage: 79.5%</div>
+
+                    <div class="r-divider"></div>
+
+                    <div class="r-row">
+                        <div>
+                            <div class="r-role">Class X</div>
+                            <div class="r-org">Kokilaben Dhirubhai Ambani Reliance Foundation School, Jamnagar</div>
+                        </div>
+                        <div class="r-date">2021</div>
+                    </div>
+                    <div style="font-size:0.85rem; color:var(--muted);">Percentage: 92.5%</div>
+                </div>
+
+                <!-- Experience -->
+                <div class="r-section">
+                    <div class="r-title">Experience &amp; Internships</div>
+
+                    <div class="r-row">
+                        <div>
+                            <div class="r-role">CSSI Intern</div>
+                            <div class="r-org">Green Communitree / Chaitanya Charitable Trust, Jamnagar</div>
+                        </div>
+                        <div class="r-date">May – Jun 2024</div>
+                    </div>
+                    <ul class="r-list">
+                        <li>Worked on a sustainability project focused on EcoBricks — repurposing plastic waste into construction material.</li>
+                        <li>Assisted in organising awareness drives on plastic waste management and environmental conservation.</li>
+                    </ul>
+
+                    <div class="r-divider"></div>
+
+                    <div class="r-row">
+                        <div>
+                            <div class="r-role">Industrial Visits</div>
+                            <div class="r-org">Amul · IFFCO · Expresolv Limited</div>
+                        </div>
+                        <div class="r-date">2025</div>
+                    </div>
+                    <ul class="r-list">
+                        <li>Gained direct exposure to operational and manufacturing processes across dairy, fertilizer, and chemical sectors.</li>
+                        <li>Observed scale-up practices, safety protocols, and quality control workflows at industrial facilities.</li>
+                    </ul>
+                </div>
+
+                <!-- Certifications -->
+                <div class="r-section">
+                    <div class="r-title">Certifications</div>
+                    <div class="r-row">
+                        <div>
+                            <div class="r-role">Simulation Tools for Engineering Problems (STEP 3.0)</div>
+                            <div class="r-org">Sardar Vallabhbhai National Institute of Technology (SVNIT), Surat</div>
+                        </div>
+                        <div class="r-date">2025</div>
+                    </div>
+                </div>
+
+                <!-- Skills -->
+                <div class="r-section">
+                    <div class="r-title">Skills</div>
+                    <div class="r-skills-row">
+                        <span class="r-skill">Python</span>
+                        <span class="r-skill">DWSIM</span>
+                        <span class="r-skill">CFD Simulations</span>
+                        <span class="r-skill">COMSOL Multiphysics</span>
+                        <span class="r-skill">MS Excel</span>
+                        <span class="r-skill">Canva</span>
+                        <span class="r-skill">Process Design</span>
+                        <span class="r-skill">Industrial Safety</span>
+                        <span class="r-skill">Sustainability</span>
+                    </div>
+                </div>
+
+                <!-- Languages -->
+                <div class="r-section">
+                    <div class="r-title">Languages</div>
+                    <div class="r-skills-row">
+                        <span class="r-skill">English</span>
+                        <span class="r-skill">Hindi</span>
+                        <span class="r-skill">Bengali</span>
+                    </div>
+                </div>
+
+            </div><!-- end resume-body -->
+        </div><!-- end resume-wrap -->
+    </section>
+
+    <!-- ══ EXPERIENCE & PROJECTS ══ -->
+    <section id="experience">
+        <div class="section-label">Work &amp; Exposure</div>
+        <h2>Experience &amp; Projects</h2>
+
+        <div class="timeline-item">
+            <div class="timeline-date">May – Jun<br>2024</div>
+            <div class="timeline-content">
+                <h4>CSSI Internship — Green Communitree</h4>
+                <div class="timeline-org">Chaitanya Charitable Trust, Jamnagar</div>
+                <ul class="sl">
+                    <li>Contributed to a sustainability initiative centred on EcoBricks — using non-recyclable plastic waste as filler in sealed plastic bottles to create reusable building blocks.</li>
+                    <li>Assisted in planning and conducting community awareness drives on plastic waste management and environmental responsibility.</li>
+                    <li>Developed an understanding of grassroots sustainability efforts and the role of engineers in community-level environmental action.</li>
+                </ul>
+                <div class="tags">
+                    <span class="tag">Sustainability</span>
+                    <span class="tag">Waste Management</span>
+                    <span class="tag">Community Outreach</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="timeline-item">
+            <div class="timeline-date">2025</div>
+            <div class="timeline-content">
+                <h4>Industrial Visits — Amul, IFFCO &amp; Expresolv Limited</h4>
+                <div class="timeline-org">Gujarat, India</div>
+                <ul class="sl">
+                    <li>Visited Amul's dairy processing facility, observing large-scale food-grade manufacturing, cold chain logistics, and quality assurance systems.</li>
+                    <li>Toured IFFCO's fertiliser plant, gaining exposure to chemical process engineering at an industrial scale — including reactor operations and material handling.</li>
+                    <li>Explored Expresolv Limited's manufacturing setup, understanding solvent-based chemical processes and safety compliance in practice.</li>
+                </ul>
+                <div class="tags">
+                    <span class="tag">Industrial Exposure</span>
+                    <span class="tag">Process Engineering</span>
+                    <span class="tag">Manufacturing</span>
+                    <span class="tag">Quality Control</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="timeline-item">
+            <div class="timeline-date">2025</div>
+            <div class="timeline-content">
+                <h4>STEP 3.0 — Simulation Tools for Engineering Problems</h4>
+                <div class="timeline-org">SVNIT, Surat</div>
+                <ul class="sl">
+                    <li>Completed a structured programme on engineering simulation tools, covering DWSIM for process simulation, CFD for structural and thermal flow analysis, and COMSOL Multiphysics for coupled physics problems.</li>
+                    <li>Applied simulation techniques to model real engineering problems, building practical competency in computational tools beyond standard coursework.</li>
+                </ul>
+                <div class="tags">
+                    <span class="tag">DWSIM</span>
+                    <span class="tag">CFD</span>
+                    <span class="tag">COMSOL</span>
+                    <span class="tag">Process Simulation</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ══ SKILLS ══ -->
+    <section id="skills">
+        <div class="section-label">Capabilities</div>
+        <h2>Skills &amp; Tools</h2>
+
+        <div class="two-col">
+            <div class="card">
+                <div class="card-meta">Simulation &amp; Computation</div>
+                <h3>Technical Tools</h3>
+                <div class="skill-grid">
+                    <span class="skill-pill">DWSIM</span>
+                    <span class="skill-pill">COMSOL Multiphysics</span>
+                    <span class="skill-pill">CFD (Flow &amp; Heat Transfer)</span>
+                    <span class="skill-pill">Python</span>
+                    <span class="skill-pill">MS Excel</span>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-meta">Professional</div>
+                <h3>Soft Skills &amp; Tools</h3>
+                <div class="skill-grid">
+                    <span class="skill-pill">Process Design Thinking</span>
+                    <span class="skill-pill">Industrial Safety Awareness</span>
+                    <span class="skill-pill">Sustainability Practices</span>
+                    <span class="skill-pill">Canva</span>
+                    <span class="skill-pill">Technical Communication</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-meta">Languages</div>
+            <h3>Communication</h3>
+            <div class="skill-grid">
+                <span class="skill-pill">English — Proficient</span>
+                <span class="skill-pill">Hindi — Fluent</span>
+                <span class="skill-pill">Bengali — Native</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ══ ETHICS ══ -->
+    <section id="ethics">
+        <div class="section-label">Responsibility</div>
+        <h2>Global Awareness &amp; Ethical Considerations</h2>
+
+        <div class="card">
+            <div class="card-meta">Sustainability in Practice</div>
+            <h3>EcoBrick Initiative — Environmental Engineering Ethics</h3>
+            <ul class="sl">
+                <li><strong>Waste Reduction as Engineering:</strong> The EcoBrick project demonstrated that engineering solutions can emerge from everyday materials — reframing plastic waste not as a problem but as a resource to be designed around.</li>
+                <li><strong>Community-Centred Design:</strong> Effective environmental solutions require public awareness and behavioural change, not just technical intervention. Outreach is as important as the solution itself.</li>
+                <li><strong>Responsibility Beyond the Lab:</strong> Engineers have an obligation to consider the social and environmental lifecycle of any material or process they work with.</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <div class="card-meta">Industrial Ethics</div>
+            <h3>Safety &amp; Sustainability in Industrial Processes</h3>
+            <ul class="sl">
+                <li><strong>Safety as a Design Constraint:</strong> Exposure to large-scale industrial facilities reinforced that safety protocols are non-negotiable design parameters, not afterthoughts.</li>
+                <li><strong>Sustainable Scale:</strong> Observing operations at Amul, IFFCO, and Expresolv highlighted the environmental footprint of industrial-scale production and the importance of sustainability planning.</li>
+                <li><strong>Ethical Manufacturing:</strong> Quality assurance and regulatory compliance are ultimately about protecting end-users and communities — not just passing inspections.</li>
+            </ul>
+        </div>
+
+        <div class="highlight-box">
+            <p><strong>Core Belief:</strong> Chemical engineering carries a profound responsibility — the processes we design affect ecosystems, communities, and future generations. I commit to approaching every problem with both technical rigour and environmental conscience.</p>
+        </div>
+    </section>
+
+    <!-- ══ FUTURE ══ -->
+    <section id="future">
+        <div class="section-label">Roadmap</div>
+        <h2>Future Aspirations &amp; Professional Development</h2>
+
+        <div class="two-col">
+            <div class="card">
+                <div class="card-meta">Near Term</div>
+                <h3>Short-Term Goals</h3>
+                <ul class="sl">
+                    <li>Deepen proficiency in DWSIM and COMSOL for advanced process modelling.</li>
+                    <li>Secure an industry internship in process design, chemical manufacturing, or environmental engineering.</li>
+                    <li>Strengthen Python programming skills for data analysis in engineering contexts.</li>
+                    <li>Participate in technical competitions and paper presentations at the national level.</li>
+                </ul>
+            </div>
+            <div class="card">
+                <div class="card-meta">Long Term</div>
+                <h3>Long-Term Vision</h3>
+                <ul class="sl">
+                    <li>Pursue postgraduate studies in process engineering or sustainable chemical technology.</li>
+                    <li>Contribute to research in green chemistry, industrial safety, or clean energy transition.</li>
+                    <li>Work in roles that sit at the intersection of engineering excellence and environmental responsibility.</li>
+                    <li>Build a career where technical depth and social impact reinforce each other.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="highlight-box">
+            <p style="font-style:italic; text-align:center;">
+                Every simulation I run, every industrial facility I walk through, and every problem I engage with is a step toward becoming an engineer who builds systems that work — and systems that last.
+            </p>
+        </div>
+    </section>
+
+    <!-- ══ SWOT ══ -->
+    <section id="swot">
+        <div class="section-label">Self-Assessment</div>
+        <h2>SWOT Analysis &amp; Conclusion</h2>
+
+        <div class="swot-grid">
+            <div class="swot-cell s">
+                <div class="swot-label">Strengths</div>
+                <ul>
+                    <li>Strong academic record — 8.5 CGPA, consistent performer.</li>
+                    <li>Practical simulation skills across DWSIM, CFD, and COMSOL.</li>
+                    <li>Multilingual — English, Hindi, and Bengali.</li>
+                    <li>Genuine commitment to sustainability and environmental ethics.</li>
+                </ul>
+            </div>
+            <div class="swot-cell w">
+                <div class="swot-label">Weaknesses</div>
+                <ul>
+                    <li>Limited professional internship experience in core chemical industry roles.</li>
+                    <li>Still developing depth in advanced process safety methodologies.</li>
+                    <li>Industry exposure has been primarily observational rather than hands-on.</li>
+                </ul>
+            </div>
+            <div class="swot-cell o">
+                <div class="swot-label">Opportunities</div>
+                <ul>
+                    <li>Growing demand for simulation-skilled engineers in pharmaceutical and energy sectors.</li>
+                    <li>PDEU's strong industry partnerships open quality internship pathways.</li>
+                    <li>Rising importance of sustainable process design across all industries.</li>
+                </ul>
+            </div>
+            <div class="swot-cell t">
+                <div class="swot-label">Threats</div>
+                <ul>
+                    <li>Competitive postgraduate admissions require a consistently strong profile.</li>
+                    <li>Rapid evolution of simulation tools demands continuous upskilling.</li>
+                    <li>Balancing breadth of interests with depth of specialisation.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="card" style="margin-top:1.5rem;">
+            <div class="card-meta">Conclusion</div>
+            <h3>Closing Reflection</h3>
+            <p style="font-size:0.95rem; line-height:1.75;">
+                This portfolio represents the foundation of an engineering career being built with intention.
+                A strong academic record, growing technical competency in simulation tools, and a principled
+                commitment to sustainability define where I stand today. The experiences documented here —
+                from grassroots environmental internships to exposure at industrial-scale manufacturing
+                facilities — reflect a student who engages with engineering as both a technical discipline
+                and a social responsibility. I carry that conviction into every step ahead.
+            </p>
+        </div>
+    </section>
+
+    <!-- ══ TESTIMONIALS ══ -->
+    <section id="testimonials">
+        <div class="section-label">What Others Say</div>
+        <h2>Testimonials</h2>
+
+        <div class="testimonial-grid">
+            <div class="tcard">
+                <span class="tcard-quote">"</span>
+                <p>Sudipa is one of the most diligent students I have taught. She approaches every concept with genuine curiosity and doesn't move on until she has fully understood it. Her performance in process engineering coursework reflects both her intellectual ability and her discipline.</p>
+                <div class="tcard-author">Faculty — Department of Chemical Engineering</div>
+                <div class="tcard-role">Pandit Deendayal Energy University</div>
+            </div>
+
+            <div class="tcard">
+                <span class="tcard-quote">"</span>
+                <p>During the STEP 3.0 programme at SVNIT, Sudipa stood out for her ability to quickly grasp simulation tools and apply them meaningfully to engineering problems. She asked sharp questions and showed a level of analytical thinking that went beyond what the course required.</p>
+                <div class="tcard-author">Programme Coordinator — STEP 3.0</div>
+                <div class="tcard-role">SVNIT, Surat</div>
+            </div>
+
+            <div class="tcard">
+                <span class="tcard-quote">"</span>
+                <p>Working with Sudipa on group assignments has been a genuinely collaborative experience. She contributes thoughtfully, communicates clearly across our multilingual team, and always brings a perspective grounded in both technical accuracy and environmental awareness.</p>
+                <div class="tcard-author">Batchmate, B.Tech Chemical Engineering</div>
+                <div class="tcard-role">Pandit Deendayal Energy University</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ══ CONTACT ══ -->
+    <section id="contact">
+        <div class="section-label">Get In Touch</div>
+        <h2>Contact Details</h2>
+
+        <div class="contact-grid">
+            <div class="contact-item">
+                <span class="contact-icon">👤</span>
+                <div>
+                    <div class="contact-label">Name</div>
+                    <div class="contact-value">Sudipa Jana</div>
+                </div>
+            </div>
+            <div class="contact-item">
+                <span class="contact-icon">📧</span>
+                <div>
+                    <div class="contact-label">Email</div>
+                    <div class="contact-value"><a href="mailto:jsudipa004@gmail.com">jsudipa004@gmail.com</a></div>
+                </div>
+            </div>
+            <div class="contact-item">
+                <span class="contact-icon">📞</span>
+                <div>
+                    <div class="contact-label">Phone</div>
+                    <div class="contact-value">+91 9023986036</div>
+                </div>
+            </div>
+            <div class="contact-item">
+                <span class="contact-icon">🔗</span>
+                <div>
+                    <div class="contact-label">LinkedIn</div>
+                    <div class="contact-value"><a href="https://www.linkedin.com/in/sudipa-jana-a967b52b4" target="_blank" rel="noopener noreferrer">sudipa-jana-a967b52b4</a></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Theme Toggle -->
+    <button class="theme-btn" id="themeBtn" aria-label="Toggle theme">🌙</button>
+
+    <script>
+        /* Scroll bar */
+        const scrollBar = document.getElementById('scrollBar');
+        window.addEventListener('scroll', function() {
+            const s = document.body.scrollTop || document.documentElement.scrollTop;
+            const h = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            if (h > 0) scrollBar.style.width = ((s / h) * 100) + '%';
+        });
+
+        /* Theme toggle */
+        const themeBtn = document.getElementById('themeBtn');
+        const root = document.documentElement;
+
+        function setTheme(t) {
+            root.setAttribute('data-theme', t);
+            themeBtn.textContent = t === 'dark' ? '☀️' : '🌙';
+            try { localStorage.setItem('sj-theme', t); } catch(e) {}
+        }
+
+        var saved = 'light';
+        try { saved = localStorage.getItem('sj-theme') || 'light'; } catch(e) {}
+        setTheme(saved);
+
+        themeBtn.addEventListener('click', function() {
+            setTheme(root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+        });
+    </script>
+</body>
+</html>
